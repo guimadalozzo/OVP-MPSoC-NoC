@@ -1,0 +1,16 @@
+#define dijkstra_5	 0
+#define dijkstra_10	 256
+#define dijkstra_3	 512
+#define dijkstra_7	 768
+#define dijkstra_11	 1
+#define dijkstra_8	 257
+#define dijkstra_0	 513
+#define dijkstra_1	 769
+#define dijkstra_9	 2
+#define divider	 258
+#define dijkstra_6	 514
+#define dijkstra_13	 770
+#define dijkstra_12	 3
+#define dijkstra_14	 259
+#define dijkstra_4	 515
+#define dijkstra_2	 771

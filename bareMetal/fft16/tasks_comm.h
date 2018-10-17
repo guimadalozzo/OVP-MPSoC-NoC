@@ -1,0 +1,16 @@
+#define front	 0
+#define fft_5	 256
+#define fft_6	 512
+#define front_6	 768
+#define fft_3	 1
+#define front_0	 257
+#define fft_4	 513
+#define front_4	 769
+#define front_3	 2
+#define fft_1	 258
+#define front_1	 514
+#define fft_0	 770
+#define fft_2	 3
+#define fft	 259
+#define front_2	 515
+#define front_5	 771

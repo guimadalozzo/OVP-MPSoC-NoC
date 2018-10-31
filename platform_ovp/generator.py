@@ -813,7 +813,7 @@ def generate():
 	genFile.write("\n    icmInit(ICM_VERBOSE|ICM_STOP_ON_CTRLC, 0, 0);")
 	genFile.write("\n")
 	genFile.write("\n    const char *model      = icmGetVlnvString(NULL, \"mips.ovpworld.org\", \"processor\", \"mips32_r1r5\", \"1.0\", \"model\");")
-	genFile.write("\n	const char *semihosting = icmGetVlnvString(NULL, \"mips.ovpworld.org\", \"semihosting\", \"mips32NewLib\", \"1.0\", \"model\");")
+	genFile.write("\n	const char *semihosting = icmGetVlnvString(NULL, \"mips.ovpworld.org\", \"semihosting\", \"mips32Newlib\", \"1.0\", \"model\");")
 	genFile.write("\n")
 	genFile.write("\n	//create a user attribute object")
 	genFile.write("\n	icmAttrListP userAttrs = icmNewAttrList();")

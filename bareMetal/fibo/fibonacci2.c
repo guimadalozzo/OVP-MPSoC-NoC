@@ -15,19 +15,19 @@ int main(int argc, char **argv) {
     Message msg;
     msg.length = 1;
     int i=0;
-    int* recebeu;
+    Message recebeu;
     printf("2 starting...\n");
 
     while(i<ITERATIONS) {
         recebeu = Receive();
-        if(recebeu[0]==ITERATIONS) break;
-        i=recebeu[0];
+        if(recebeu.msg[0]==ITERATIONS) break;
+        i=recebeu.msg[0];
         printf("fib2(%d)=%d \n", i, fib(i));
         msg.msg[0] = i+1;
-        Send(fibonacci3, msg);
+        Send(msg, fibonacci3);
     }
     msg.msg[0] = ITERATIONS;
-    Send(fibonacci3, msg);
+    Send(msg, fibonacci3);
     printf("2 finishing ...\n");
     MemoryWrite(END_SIM, 2);
     return 0;

@@ -15,16 +15,16 @@ int main(int argc, char **argv) {
     Message msg;
     msg.length = 1;
     int i=0;
-    int* recebeu;
+    Message recebeu;
     printf("3 starting...\n");
 
     while(i<ITERATIONS) {
         recebeu = Receive();
-        if(recebeu[0]==ITERATIONS) break;
-        i=recebeu[0];
+        if(recebeu.msg[0]==ITERATIONS) break;
+        i=recebeu.msg[0];
         printf("fib3(%d)=%d \n", i, fib(i));
         msg.msg[0] = i+1;
-        Send(fibonacci0, msg);
+        Send(msg, fibonacci0);
     }
 
     printf("3 finishing ...\n");

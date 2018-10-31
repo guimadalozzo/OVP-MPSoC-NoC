@@ -3,7 +3,7 @@
 #include "MPIe.h"
 #include "tasks_comm.h"
 
-#define ITERATIONS  28
+#define ITERATIONS  15
 
 static int fib(int i) {
     return (i>1) ? fib(i-1) + fib(i-2) : i;

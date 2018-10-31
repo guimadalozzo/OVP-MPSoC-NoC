@@ -63,7 +63,7 @@ $(OBJDIR)/%.o: %.c
 $(OBJDIR)/dmacModel.stubs.o: dmacModel.stubs.c
 	$(V) echo "Cross Compiling Peripheralc Stubs $@"
 	$(V) mkdir -p $(@D)
-	$(V) $(PSE_CC) -g -gdwarf-2 -c -o $@ $< $(CFLAGS) $(DISABLEOPT) --include $
+	$(V) $(PSE_CC) -g -gdwarf-2 -c -o $@ $< $(CFLAGS) $(DISABLEOPT) --include 
 
 $(OBJDIR)/%.o: %.c++
 	$(V) echo "Cross Compiling Peripheral $@"

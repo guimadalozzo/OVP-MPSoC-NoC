@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 
 ######################################
 # author G.Madalozzo
@@ -936,7 +936,7 @@ def generate():
 	aux_noc = 0
 	for task in os.listdir(appFolderPath):
 		if task.endswith('.c'):
-			genFile.write("\n	icmLoadProcessorMemory(processors["+str(stepIndex)+"], \""+appFolderPath+"/"+task[0:len(task)-2]+".MIPS32.elf\", 0, 0, 1);")
+			genFile.write("\n	icmLoadProcessorMemory(processors["+str(stepIndex)+"], \""+appFolderPath+"/"+task[0:len(task)-2]+".IMG_MIPS32R2.elf\", 0, 0, 1);")
 			print task[0:len(task)-2]+": "+str(int(aux_x<<8) + aux_y) + " ######### " + str(aux_x) + str(aux_y)
 			tasksFile.write("#define "+task[0:len(task)-2]+"\t "+str(int(aux_x<<8) + aux_y)+"\n")
 			stepIndex += 1
@@ -967,7 +967,7 @@ try:
 	print '\033[93m\n\n#####<-  Bare Metal OVP MPSoC Generation  ->#####\033[0m\n'
 	print '$ Generating platform...'
 
-	projPath = os.environ['BM_PATH']
+	projPath = os.environ['HEMPS_OVP_PATH']
 	noc_x = int(sys.argv[1])
 	noc_y = int(sys.argv[2])
 	app_folder = sys.argv[3]

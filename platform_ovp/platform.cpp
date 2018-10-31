@@ -5,9 +5,9 @@
 #include <sys/time.h>
 #include "defines.h"
 
-#define N_PE 		225
-#define N_PE_X 	15
-#define N_PE_Y 	15
+#define N_PE 		4
+#define N_PE_X 	2
+#define N_PE_Y 	2
 
 #define SIM_ATTRS (ICM_ATTR_DEFAULT)
 
@@ -787,8 +787,8 @@ int main(int argc, char **argv) {
     // of execution
     icmInit(ICM_VERBOSE|ICM_STOP_ON_CTRLC, 0, 0);
 
-    const char *model      = icmGetVlnvString(NULL, "mips.ovpworld.org", "processor", "mips32", "1.0", "model");
-	const char *semihosting = icmGetVlnvString(NULL, "mips.ovpworld.org", "semihosting", "mips32SDE", "1.0", "model");
+    const char *model       = icmGetVlnvString(NULL, "mips.ovpworld.org", "processor", "mips32_r1r5", "1.0", "model");
+	const char *semihosting = icmGetVlnvString(NULL, "mips.ovpworld.org", "semihosting", "mips32Newlib", "1.0", "model");
 
 	//create a user attribute object
 	icmAttrListP userAttrs = icmNewAttrList();
@@ -801,7 +801,7 @@ int main(int argc, char **argv) {
 		sprintf(nameString, "%d", stepIndex);
         processors[stepIndex] = icmNewProcessor(
             nameString,            // CPU name
-            "mips32",           // CPU type
+            "mips32_r1r5",           // CPU type
             stepIndex,          // CPU cpuId
             0,                  // CPU model flags
             32,                 // address bits
@@ -832,7 +832,7 @@ int main(int argc, char **argv) {
         icmMapExternalMemory(bus[stepIndex], nameString, ICM_PRIV_RW, 0xf0000000, 0xffffffff, regbank_rb, regbank_wb, 0);
 
         sprintf(nameString, "router-%d", stepIndex);
-        pse[stepIndex] = icmNewPSE(nameString, "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/platform_ovp/router/pse.pse", NULL, NULL, NULL);
+        pse[stepIndex] = icmNewPSE(nameString, "/CAMINHO/platform_ovp/router/pse.pse", NULL, NULL, NULL);
 
         sprintf(nameString, "router_address-%d", stepIndex);
 		router_address[stepIndex] = icmNewNet(nameString);
@@ -904,231 +904,10 @@ int main(int argc, char **argv) {
 		icmAddNetCallback(data_write[stepIndex][LOCAL], Receive, (void*) stepIndex);
 	}
 
-	icmLoadProcessorMemory(processors[0], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_107.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[1], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_71.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[2], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_19.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[3], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_46.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[4], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_93.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[5], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_22.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[6], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_30.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[7], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_45.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[8], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_67.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[9], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_33.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[10], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_15.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[11], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_47.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[12], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_64.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[13], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_70.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[14], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_73.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[15], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_53.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[16], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_90.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[17], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_102.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[18], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_100.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[19], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_102.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[20], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_49.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[21], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_28.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[22], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_82.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[23], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_66.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[24], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_33.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[25], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_59.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[26], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_54.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[27], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_29.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[28], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_111.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[29], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_87.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[30], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_34.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[31], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_38.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[32], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_39.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[33], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_72.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[34], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_77.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[35], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_95.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[36], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_92.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[37], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_23.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[38], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_17.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[39], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_26.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[40], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_34.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[41], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_109.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[42], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_24.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[43], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_36.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[44], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_45.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[45], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_32.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[46], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_97.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[47], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_29.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[48], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_5.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[49], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_60.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[50], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/idle.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[51], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_72.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[52], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_21.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[53], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_6.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[54], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_52.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[55], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_108.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[56], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_106.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[57], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_84.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[58], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_36.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[59], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_54.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[60], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_81.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[61], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_52.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[62], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_6.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[63], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_67.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[64], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_3.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[65], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_31.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[66], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_94.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[67], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_17.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[68], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_66.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[69], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_43.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[70], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_86.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[71], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_35.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[72], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_9.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[73], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_51.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[74], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_0.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[75], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_42.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[76], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_55.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[77], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_78.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[78], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_55.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[79], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_80.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[80], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_68.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[81], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_4.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[82], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_4.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[83], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_95.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[84], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_75.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[85], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_69.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[86], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_7.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[87], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_50.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[88], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_19.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[89], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_98.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[90], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_83.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[91], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_78.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[92], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_20.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[93], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_27.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[94], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_18.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[95], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_86.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[96], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_21.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[97], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_62.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[98], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_83.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[99], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_49.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[100], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_39.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[101], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_58.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[102], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_80.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[103], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_3.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[104], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_68.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[105], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_47.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[106], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_75.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[107], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_13.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[108], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_10.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[109], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_60.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[110], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_57.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[111], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_46.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[112], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_1.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[113], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_12.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[114], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_91.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[115], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_74.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[116], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_77.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[117], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_62.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[118], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_99.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[119], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_50.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[120], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_81.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[121], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_32.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[122], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_8.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[123], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_9.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[124], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_110.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[125], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_96.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[126], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_1.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[127], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_61.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[128], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_76.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[129], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_65.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[130], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_37.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[131], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_24.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[132], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_57.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[133], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_26.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[134], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_63.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[135], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_44.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[136], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_87.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[137], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_8.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[138], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_16.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[139], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_108.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[140], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_76.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[141], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_53.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[142], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_10.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[143], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_73.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[144], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_74.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[145], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_110.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[146], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_43.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[147], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_89.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[148], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_0.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[149], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_100.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[150], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_42.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[151], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_105.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[152], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_79.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[153], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_59.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[154], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_22.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[155], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_88.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[156], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_111.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[157], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_84.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[158], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_44.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[159], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_56.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[160], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_18.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[161], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_15.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[162], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_104.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[163], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_105.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[164], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_35.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[165], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_93.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[166], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_20.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[167], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_69.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[168], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_2.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[169], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_85.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[170], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_103.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[171], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_31.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[172], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_70.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[173], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_13.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[174], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_25.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[175], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_82.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[176], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_88.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[177], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_90.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[178], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_41.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[179], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_30.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[180], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_40.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[181], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_61.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[182], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_91.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[183], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_14.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[184], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_25.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[185], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_40.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[186], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_99.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[187], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_16.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[188], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_48.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[189], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_106.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[190], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_71.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[191], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_7.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[192], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_64.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[193], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_89.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[194], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_2.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[195], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_5.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[196], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_101.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[197], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_12.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[198], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_28.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[199], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_23.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[200], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_38.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[201], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_98.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[202], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_14.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[203], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_107.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[204], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_79.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[205], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_65.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[206], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_37.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[207], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_96.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[208], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_51.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[209], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_104.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[210], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_41.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[211], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_11.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[212], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_101.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[213], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_109.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[214], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_56.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[215], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_85.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[216], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_58.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[217], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_92.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[218], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_27.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[219], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_48.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[220], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_63.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[221], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/front_97.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[222], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_94.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[223], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_11.MIPS32.elf", 0, 0, 1);
-	icmLoadProcessorMemory(processors[224], "/home/madalozzo/Dropbox/2-Doutorado/bare_iscas/bareMetal/fft225/fft_103.MIPS32.elf", 0, 0, 1);
+	icmLoadProcessorMemory(processors[0], "PASTA_APLICACAO/fibonacci1.IMG_MIPS32R2.elf", 0, 0, 1);
+	icmLoadProcessorMemory(processors[1], "PASTA_APLICACAO/fibonacci2.IMG_MIPS32R2.elf", 0, 0, 1);
+	icmLoadProcessorMemory(processors[2], "PASTA_APLICACAO/fibonacci3.IMG_MIPS32R2.elf", 0, 0, 1);
+	icmLoadProcessorMemory(processors[3], "PASTA_APLICACAO/fibonacci0.IMG_MIPS32R2.elf", 0, 0, 1);
 
     // simulate the platform
     icmProcessorP final = icmSimulatePlatform();

@@ -18,8 +18,8 @@ ifeq ($(MAKEPASS),2)
 
 OPTIMISATION?=-O2
 
-#CROSS=MIPS32
-SRC?=divider.c dijkstra_0.c dijkstra_1.c dijkstra_2.c
+CROSS=MIPS32
+SRC?=fibonacci0.c fibonacci1.c fibonacci2.c fibonacci3.c
 SRCINC?=
 
 INCOBJ=$(patsubst %.c,%.$(CROSS).o,$(SRCINC))

@@ -18,8 +18,8 @@ ifeq ($(MAKEPASS),2)
 
 OPTIMISATION?=-O2
 
-#CROSS=MIPS32
-SRC?=divider.c dijkstra_0.c dijkstra_1.c dijkstra_2.c
+CROSS=IMG_MIPS32R2
+SRC?=$(wildcard *.c)
 SRCINC?=
 
 INCOBJ=$(patsubst %.c,%.$(CROSS).o,$(SRCINC))
